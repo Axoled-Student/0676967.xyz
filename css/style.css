@@ -355,16 +355,71 @@ h1 {
   box-shadow: var(--shadow);
 }
 
-.clock-card {
-  padding: 28px;
+/* ---------- 首頁的自動播放畫面 ---------- */
+.screen-card {
+  overflow: hidden;
 }
 
-.card-label {
+.screen {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #0b0b0a;
+  color: #ece9e1;
+  cursor: pointer;
+}
+
+.screen:focus-visible {
+  outline-offset: -4px;
+  border-radius: 0;
+}
+
+.frame {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 16px;
+  letter-spacing: 0;
+  font-variant-ligatures: none;
+  white-space: pre;
+  transform-origin: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.screen-msg {
+  position: absolute;
+  inset: auto 0 14px;
+  margin: 0;
+  text-align: center;
+  color: #b9b5aa;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  text-shadow: 0 0 8px #0b0b0a, 0 0 2px #0b0b0a;
+  pointer-events: none;
+}
+
+.screen-foot {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.92rem;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  letter-spacing: 0;
+}
+
+.clock-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
 }
 
 .dot {
@@ -381,42 +436,6 @@ h1 {
   100% {
     box-shadow: 0 0 0 9px rgb(47 166 106 / 0);
   }
-}
-
-.clock {
-  margin-top: 12px;
-  font-family: var(--mono);
-  font-size: clamp(2.3rem, 5vw, 3.1rem);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: 0;
-  font-variant-numeric: tabular-nums;
-}
-
-.date {
-  margin-top: 4px;
-  color: var(--muted);
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px dashed var(--line);
-}
-
-.tags li {
-  padding: 2px 12px;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-family: var(--mono);
-  font-size: 0.85rem;
-  font-weight: 600;
-  line-height: 1.8;
-  letter-spacing: 0;
 }
 
 /* ---------- 區塊 ---------- */
@@ -503,7 +522,7 @@ h3 {
   transition: transform 0.25s, border-color 0.25s;
 }
 
-.project:not(.project-soon):hover {
+.project:hover {
   transform: translateY(-4px);
   border-color: var(--accent);
 }
@@ -540,12 +559,6 @@ h3 {
   text-underline-offset: 4px;
 }
 
-.project-soon {
-  border-style: dashed;
-  background: transparent;
-  box-shadow: none;
-}
-
 /* ---------- 聯絡 ---------- */
 .contact-panel {
   display: flex;
@@ -569,6 +582,10 @@ h3 {
 
 .contact-panel .btn {
   flex-shrink: 0;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 /* ---------- 頁尾 ---------- */

@@ -1,0 +1,47 @@
+Third-party notices
+===================
+
+media/bad-apple.gz.txt
+----------------------
+The ASCII text frames for the auto-playing "ASCII Bad Apple!!" screen on the
+home page (index.html, js/bad-apple.js) come from the generated file
+`generated/play.txt` in:
+
+  https://github.com/Sub0X/ASCII_Bad_Apple_Remastered
+  (commit b5ec037, 2022-11-13)
+
+Modifications: frames were split on the "SPLIT" marker, trailing whitespace
+was removed from every line, "." characters were replaced with spaces (as the
+original player does), the frames were joined with a form-feed (\f) character,
+compressed with gzip and base64-encoded into a text file. The frame contents
+are otherwise unchanged.
+
+That repository is distributed under the following license:
+
+MIT License
+
+Copyright (c) 2022 Paul Li
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Note
+----
+The MIT license above covers the repository as published by its author. The
+underlying song and animation "Bad Apple!!" remain the property of their
+respective creators.
