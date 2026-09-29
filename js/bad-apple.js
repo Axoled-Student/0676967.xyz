@@ -6,20 +6,16 @@
   var COLS = 100;
   var ROWS = 75;
   var BASE_FONT = 16; // 以固定字級排版，再用 scale 縮放，避免瀏覽器的最小字級限制
-  var STILL_FRAME = 1000; // 偏好減少動態時顯示的靜止畫面
 
   var screen = document.getElementById("screen");
   var pre = document.getElementById("frame");
   var msg = document.getElementById("screen-msg");
   if (!screen || !pre || !msg) return;
 
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
   var frames = null;
-  var userPaused = reduceMotion; // 減少動態的人不自動播放，可點一下開始
+  var userPaused = false; // 一律自動播放，只有使用者點一下才會暫停
   var inView = true;
   var running = false;
-  var hasPlayed = false;
   var offset = 0; // 暫停時的播放位置（秒）
   var startedAt = 0;
   var lastIndex = -1;
@@ -117,14 +113,13 @@
     if (shouldRun && !running) {
       startedAt = performance.now();
       running = true;
-      hasPlayed = true;
       rafId = requestAnimationFrame(loop);
     } else if (!shouldRun && running) {
       offset = position();
       running = false;
       cancelAnimationFrame(rafId);
     }
-    if (frames) showMessage(!userPaused ? "" : hasPlayed ? "已暫停・點一下繼續" : "點一下開始播放");
+    if (frames) showMessage(userPaused ? "已暫停・點一下繼續" : "");
   }
 
   function toggle() {
@@ -159,9 +154,6 @@
   load().then(
     function (loaded) {
       frames = loaded;
-      if (reduceMotion) {
-        draw(Math.min(STILL_FRAME, frames.length - 1) / FPS);
-      }
       sync();
     },
     function () {
