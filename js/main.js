@@ -20,13 +20,11 @@ function spam() {
   return "You are an idiot!";
 }
 function buildBg() {
-  var bg = document.getElementById("bg");
-  for (var i = 1; i <= 30; i++) {
-    var img = document.createElement("img");
-    img.src = "media/img/bg/" + (i < 10 ? "0" : "") + i + ".jpg";
-    img.alt = "";
-    bg.appendChild(img);
-  }
+  var i = Math.floor(Math.random() * 30) + 1;
+  var img = document.createElement("img");
+  img.src = "media/img/bg/" + (i < 10 ? "0" : "") + i + ".jpg";
+  img.alt = "";
+  document.getElementById("bg").appendChild(img);
 }
 function init() {
   buildBg();

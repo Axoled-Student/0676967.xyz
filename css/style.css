@@ -24,10 +24,7 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    opacity: 0.6;
+    opacity: 0.85;
 }
 
 #bg img {
@@ -35,6 +32,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 20%;
 }
 
 h5 {
@@ -45,13 +43,6 @@ h5 {
     white-space: nowrap;
     -webkit-text-stroke: 0.05em black;
     paint-order: stroke fill;
-}
-
-@media (max-aspect-ratio: 1/1) {
-    #bg {
-        grid-template-columns: repeat(5, 1fr);
-        grid-template-rows: repeat(6, 1fr);
-    }
 }
 
 @keyframes flashing {
