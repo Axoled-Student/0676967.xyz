@@ -1,85 +1,96 @@
-if (top.location != location) {
-  top.location.href = location.href;
-}
-function openPopup() {
-  window.open(
-    "popup.html",
-    "",
-    "blankmenubar=no,status=no,toolbar=noresizable=no,width=350,height=370,titlebar=no,alwaysRaised=yes"
-  );
-}
-function reopen() {
-  for (var i = 0; i < 3; i++) {
-    openPopup();
+(function () {
+  "use strict";
+
+  var root = document.documentElement;
+  var TZ = "Asia/Taipei";
+
+  /* ---------- 深色／淺色模式 ---------- */
+  var toggle = document.getElementById("theme-toggle");
+  var darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+  function currentTheme() {
+    return root.dataset.theme || (darkQuery.matches ? "dark" : "light");
   }
-}
-function spam() {
-  for (var i = 0; i < 10; i++) {
-    openPopup();
+
+  toggle.addEventListener("click", function () {
+    var next = currentTheme() === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem("theme", next);
+    } catch (e) {}
+  });
+
+  /* ---------- 台北時間與問候語 ---------- */
+  var clockEl = document.getElementById("clock");
+  var dateEl = document.getElementById("date");
+  var greetingEl = document.getElementById("greeting");
+
+  var timeFmt = new Intl.DateTimeFormat("zh-TW", {
+    timeZone: TZ,
+    hourCycle: "h23",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+  var dateFmt = new Intl.DateTimeFormat("zh-TW", {
+    timeZone: TZ,
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "long",
+  });
+  var hourFmt = new Intl.DateTimeFormat("en-US", {
+    timeZone: TZ,
+    hourCycle: "h23",
+    hour: "numeric",
+  });
+
+  function greetingFor(hour) {
+    if (hour >= 5 && hour < 11) return "早安";
+    if (hour >= 11 && hour < 18) return "午安";
+    if (hour >= 18) return "晚安";
+    return "夜深了";
   }
-  return "You are an idiot!";
-}
-function buildBg() {
-  var i = Math.floor(Math.random() * 30) + 1;
-  var img = document.createElement("img");
-  img.src = "media/img/bg/" + (i < 10 ? "0" : "") + i + ".jpg";
-  img.alt = "";
-  document.getElementById("bg").appendChild(img);
-}
-function init() {
-  buildBg();
-  document.body.onclick = reopen;
-  document.body.onmouseover = reopen;
-  document.body.onmousemove = reopen;
-  window.onunload = spam;
-  window.onbeforeunload = spam;
-  playBall();
-  if (bookmark) {
-    bookmark();
+
+  var lastDate = "";
+
+  function tick() {
+    var now = new Date();
+    clockEl.textContent = timeFmt.format(now);
+
+    var dateText = dateFmt.format(now);
+    if (dateText !== lastDate) {
+      lastDate = dateText;
+      dateEl.textContent = dateText;
+      greetingEl.textContent =
+        greetingFor(parseInt(hourFmt.format(now), 10)) + "，歡迎光臨";
+    }
   }
-  reopen();
-  setTimeout(function () {
-    window.close();
-  }, 10000);
-}
-var xOff = 5,
-  yOff = 5,
-  xPos = 400,
-  yPos = -100,
-  flagRun = true;
-function newXlt() {
-  xOff = Math.ceil(0 - 6 * Math.random()) * 5 - 10;
-  window.focus();
-}
-function newXrt() {
-  xOff = Math.ceil(7 * Math.random()) * 5 - 10;
-}
-function newYup() {
-  yOff = Math.ceil(0 - 6 * Math.random()) * 5 - 10;
-}
-function newYdn() {
-  yOff = Math.ceil(7 * Math.random()) * 5 - 10;
-}
-function fOff() {
-  flagrun = false;
-}
-function playBall() {
-  xPos += xOff;
-  yPos += yOff;
-  if (xPos > screen.width - 175) {
-    newXlt();
+
+  tick();
+  setInterval(tick, 1000);
+
+  /* ---------- 捲動進場 ---------- */
+  var items = document.querySelectorAll(".reveal");
+
+  if ("IntersectionObserver" in window) {
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    items.forEach(function (el) {
+      observer.observe(el);
+    });
+  } else {
+    items.forEach(function (el) {
+      el.classList.add("in");
+    });
   }
-  if (xPos < 0) {
-    newXrt();
-  }
-  if (yPos > screen.height - 100) {
-    newYup();
-  }
-  if (yPos < 0) {
-    newYdn();
-  }
-  if (flagRun) {
-    window.moveTo(xPos, yPos);
-    setTimeout(playBall, 1);
-  }
-}
+})();
