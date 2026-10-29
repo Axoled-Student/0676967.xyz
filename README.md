@@ -1,24 +1,30 @@
-# 0676967.xyz
+# NewnFun Entertainment — 0676967.xyz
 
-我的個人網站，以純 HTML / CSS / JavaScript 製作，沒有框架、不需要建置，部署在 GitHub Pages。
+Official website for **NewnFun Entertainment**, an independent creative-technology brand sharing web development, interactive media, software projects, and digital experiments.
 
-## 本機預覽
+- Website: https://0676967.xyz/
+- Contact: admin@0676967.xyz
+- Location: Taiwan
+- Technology: HTML / CSS / JavaScript (static site)
+- Hosting: GitHub Pages
 
-直接用瀏覽器開啟 `index.html`，或在專案資料夾執行：
+## Local preview
 
-```
+Open `index.html` directly or start a simple server:
+
+```sh
 python -m http.server 8000
 ```
 
-然後前往 http://localhost:8000。
+Then open http://localhost:8000.
 
-## 結構
+## Project structure
 
-- `index.html`：首頁（繁體中文）
-- `css/style.css`：樣式與淺色／深色主題
-- `js/theme.js`：深色／淺色主題切換
-- `js/main.js`：台北時間、問候語、捲動動畫
-- `js/bad-apple.js`：首頁自動播放的 ASCII Bad Apple!!
-- `media/bad-apple.gz.txt`：文字影格（gzip + base64），來源與授權見 `THIRD-PARTY-NOTICES.txt`
-- `favicon.svg`：網站圖示
-- `CNAME`：自訂網域
+- `index.html` — brand homepage, project showcase and contact information
+- `css/style.css` — responsive layout, light/dark theme
+- `js/theme.js` — theme toggle
+- `js/main.js` — Taiwan time, greetings and reveal animations
+- `js/bad-apple.js` — interactive ASCII art playback
+- `media/bad-apple.gz.txt` — 2,191 text frames; see `THIRD-PARTY-NOTICES.txt` for credits and licensing
+- `favicon.svg` — NewnFun site icon
+- `CNAME` — custom domain
