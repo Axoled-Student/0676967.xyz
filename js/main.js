@@ -1,69 +1,62 @@
 (function () {
   "use strict";
 
-  var TZ = "Asia/Taipei";
+  var year = document.getElementById("year");
+  if (year) year.textContent = String(new Date().getFullYear());
 
-  /* ---------- 台北時間與問候語 ---------- */
-  var clockEl = document.getElementById("clock");
-  var greetingEl = document.getElementById("greeting");
+  /* Small-screen navigation, including keyboard and outside-click support. */
+  var header = document.querySelector(".site-header");
+  var menuButton = document.getElementById("menu-toggle");
+  var menu = document.getElementById("site-nav");
 
-  var timeFmt = new Intl.DateTimeFormat("zh-TW", {
-    timeZone: TZ,
-    hourCycle: "h23",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-  var hourFmt = new Intl.DateTimeFormat("en-US", {
-    timeZone: TZ,
-    hourCycle: "h23",
-    hour: "numeric",
-  });
-
-  function greetingFor(hour) {
-    if (hour >= 5 && hour < 11) return "早安";
-    if (hour >= 11 && hour < 18) return "午安";
-    if (hour >= 18) return "晚安";
-    return "夜深了";
+  function closeMenu() {
+    if (!header || !menuButton) return;
+    header.classList.remove("menu-open");
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", "Open menu");
   }
 
-  var lastHour = -1;
+  if (header && menu && menuButton) {
+    menuButton.addEventListener("click", function () {
+      var isOpen = !header.classList.contains("menu-open");
+      header.classList.toggle("menu-open", isOpen);
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+    });
 
-  function tick() {
-    var now = new Date();
-    clockEl.textContent = timeFmt.format(now);
+    menu.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", closeMenu);
+    });
 
-    var hour = parseInt(hourFmt.format(now), 10);
-    if (hour !== lastHour) {
-      lastHour = hour;
-      greetingEl.textContent = greetingFor(hour) + "，歡迎光臨";
-    }
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") closeMenu();
+    });
+
+    document.addEventListener("click", function (event) {
+      if (!header.contains(event.target)) closeMenu();
+    });
+
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 900) closeMenu();
+    });
   }
 
-  tick();
-  setInterval(tick, 1000);
-
-  /* ---------- 捲動進場 ---------- */
+  /* Appearance: reveal content when visible; remain readable without observer support. */
   var items = document.querySelectorAll(".reveal");
-
-  if ("IntersectionObserver" in window) {
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("in");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    items.forEach(function (el) {
-      observer.observe(el);
-    });
-  } else {
-    items.forEach(function (el) {
-      el.classList.add("in");
-    });
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !("IntersectionObserver" in window)) {
+    items.forEach(function (item) { item.classList.add("in"); });
+    return;
   }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.07, rootMargin: "0px 0px 35px 0px" });
+
+  items.forEach(function (item) { observer.observe(item); });
 })();
