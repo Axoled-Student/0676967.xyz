@@ -1,13 +1,13 @@
 /* ---------- 設計變數 ---------- */
 :root {
-  --bg: #fbfaf7;
+  --bg: #fafbff;
   --surface: #ffffff;
-  --ink: #1b1a17;
-  --muted: #6a665e;
-  --line: #e7e3da;
-  --accent: #c23a14;
+  --ink: #182238;
+  --muted: #5b667c;
+  --line: #e2e7f1;
+  --accent: #3f52d8;
   --accent-ink: #ffffff;
-  --accent-soft: #fbe3d9;
+  --accent-soft: #e9edff;
   --shadow: 0 1px 2px rgb(27 26 23 / 0.05), 0 16px 36px -16px rgb(27 26 23 / 0.16);
 
   --radius: 20px;
@@ -21,28 +21,28 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #12110f;
-    --surface: #1b1a17;
-    --ink: #f3f0ea;
-    --muted: #a39e94;
-    --line: #2d2b26;
-    --accent: #ff8a5f;
-    --accent-ink: #1f0e06;
-    --accent-soft: #3a2117;
+    --bg: #101626;
+    --surface: #182137;
+    --ink: #edf2ff;
+    --muted: #aebad1;
+    --line: #293651;
+    --accent: #a4b6ff;
+    --accent-ink: #101626;
+    --accent-soft: #252e52;
     --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 16px 36px -16px rgb(0 0 0 / 0.6);
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #12110f;
-  --surface: #1b1a17;
-  --ink: #f3f0ea;
-  --muted: #a39e94;
-  --line: #2d2b26;
-  --accent: #ff8a5f;
-  --accent-ink: #1f0e06;
-  --accent-soft: #3a2117;
+  --bg: #101626;
+  --surface: #182137;
+  --ink: #edf2ff;
+  --muted: #aebad1;
+  --line: #293651;
+  --accent: #a4b6ff;
+  --accent-ink: #101626;
+  --accent-soft: #252e52;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 16px 36px -16px rgb(0 0 0 / 0.6);
   color-scheme: dark;
 }
@@ -158,11 +158,12 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--mono);
-  font-weight: 700;
+  font-family: var(--font);
+  font-weight: 800;
   font-size: 1.05rem;
-  letter-spacing: 0;
+  letter-spacing: -0.02em;
   text-decoration: none;
+  white-space: nowrap;
   margin-right: auto;
 }
 
@@ -290,15 +291,17 @@ a {
 }
 
 h1 {
-  font-size: clamp(2.3rem, 6.4vw, 4.25rem);
-  font-weight: 800;
-  line-height: 1.25;
+  font-size: clamp(2.05rem, 5.4vw, 4.25rem);
+  font-weight: 850;
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+  overflow-wrap: anywhere;
 }
 
 .mark {
   background: linear-gradient(transparent 62%, var(--accent-soft) 62%);
   color: var(--accent);
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .lead {
@@ -364,7 +367,7 @@ h1 {
   position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: #0b0b0a;
+  background: #0d1422;
   color: #ece9e1;
   cursor: pointer;
 }
@@ -397,7 +400,7 @@ h1 {
   color: #b9b5aa;
   font-size: 0.88rem;
   line-height: 1.6;
-  text-shadow: 0 0 8px #0b0b0a, 0 0 2px #0b0b0a;
+  text-shadow: 0 0 8px #0d1422, 0 0 2px #0d1422;
   pointer-events: none;
 }
 
@@ -678,6 +681,61 @@ h3 {
   .foot {
     flex-direction: column;
     gap: 6px;
+  }
+}
+
+
+/* ---------- NewnFun studio information ---------- */
+.studio-details {
+  margin-top: 32px;
+  padding: 24px 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.studio-details h3 {
+  margin-bottom: 16px;
+}
+
+.studio-details dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+}
+
+.studio-details dt {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.studio-details dd {
+  margin: 4px 0 0;
+  font-weight: 650;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.studio-details a,
+.contact-panel p a {
+  text-underline-offset: 3px;
+}
+
+.screen-foot > span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 620px) {
+  .site-header .nav-list {
+    display: none;
+  }
+  .studio-details dl {
+    grid-template-columns: 1fr;
   }
 }
 
